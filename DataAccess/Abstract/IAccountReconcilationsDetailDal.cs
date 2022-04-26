@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Abstract
 {
-    public interface ICompanyDal:IEntityRepository<Companies>
+    //AccountReconcilationsDetails
+    public interface IAccountReconcilationsDetailDal:IEntityRepository<AccountReconcilationsDetail>
     {
-      
     }
 }

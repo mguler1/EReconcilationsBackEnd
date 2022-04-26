@@ -14,6 +14,6 @@ namespace Core.DataAccess
         void Update(T companies);
         void Delete(T companies);
         List<T> GetList(Expression<Func<T,bool>>filter=null);
-        T Get(Expression<Func<T, bool>>);
+        T Get(Expression<Func<T, bool>>filter);
     }
 }
