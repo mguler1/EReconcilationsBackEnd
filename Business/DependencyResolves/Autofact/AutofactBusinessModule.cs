@@ -17,6 +17,39 @@ namespace Business.DependencyResolves.Autofact
         {
             builder.RegisterType<CompanyManager>().As<ICompanyService>();
             builder.RegisterType<EfCompanyDal>().As<ICompanyDal>();
+
+            builder.RegisterType<AccountReconcilationsDetailsManager>().As<IAccountReconcilationsDetailsService>();
+            builder.RegisterType<EfAccountReconcilationsDetailDal>().As<IAccountReconcilationsDetailDal>();
+
+            builder.RegisterType<AccountReconcilationsManager>().As<IAccountReconcilationsService>();
+            builder.RegisterType<EfAccountReconcilationDal>().As<IAccountReconcilationDal>();
+
+            builder.RegisterType<BaBsReconcilationsDetailsManager>().As<IBaBsReconcilationsDetailsService>();
+            builder.RegisterType<EfBaBsReconcilationsDetailDal>().As<IBaBsReconcilationsDetailDal>();
+
+            builder.RegisterType<BaBsReconcilationsManager>().As<IBaBsReconcilationsService>();
+            builder.RegisterType<EfBaBsReconcilationDal>().As<IBaBsReconcilationDal>();
+
+            builder.RegisterType<CurrenciesManager>().As<ICurrenciesService>();
+            builder.RegisterType<EfCurrenciescDal>().As<ICurrenciescDal>();
+
+            builder.RegisterType<CurrencyAccountManager>().As<ICurrencyAccountService>();
+            builder.RegisterType<EfCurrencyAccountDal>().As<ICurrencyAccountDal>();
+
+            builder.RegisterType<MailParametersManager>().As<IMailParametersService>();
+            builder.RegisterType<EfMailParametersDal>().As<IMailParametersDal>();
+
+            builder.RegisterType<OperationClaimsManager>().As<IOperationClaimsService>();
+            builder.RegisterType<EfOperationClaimDal>().As<IOperationClaimDal>();
+
+            builder.RegisterType<UserCompaniesManager>().As<IUserCompaniesService>();
+            builder.RegisterType<EfUserCompanieDal>().As<IUserCompanieDal>();
+
+            builder.RegisterType<UserOperationClaimsManager>().As<IUserOperationClaimsService>();
+            builder.RegisterType<EfUserOperationClaimDal>().As<IUserOperationClaimDal>();
+
+            builder.RegisterType<UsersManager>().As<IUsersService>();
+            builder.RegisterType<EfUserDal>().As<IUserDal>();
         }
     }
 }
