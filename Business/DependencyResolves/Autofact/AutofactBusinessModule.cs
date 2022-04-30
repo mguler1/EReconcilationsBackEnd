@@ -39,6 +39,8 @@ namespace Business.DependencyResolves.Autofact
 
             builder.RegisterType<MailParametersManager>().As<IMailParametersService>();
             builder.RegisterType<EfMailParametersDal>().As<IMailParametersDal>();
+            builder.RegisterType<MailManager>().As<IMailService>();
+            builder.RegisterType<EfMailDal>().As<IMailDal>();
 
             builder.RegisterType<OperationClaimsManager>().As<IOperationClaimsService>();
             builder.RegisterType<EfOperationClaimDal>().As<IOperationClaimDal>();

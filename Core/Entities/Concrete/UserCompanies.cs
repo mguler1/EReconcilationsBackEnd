@@ -13,7 +13,7 @@ namespace Core.Entities.Concrete
         public int UserCompaniesId { get; set; }
         public int UserId { get; set; }
         public int CompanyId { get; set; }
-        public DateTime AddedAt { get; set; }
+      
         public bool IsActive { get; set; }
     }
 }

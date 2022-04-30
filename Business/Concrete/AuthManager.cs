@@ -20,12 +20,15 @@ namespace Business.Concrete
         private readonly IUsersService _usersService;
         private readonly ICompanyService _companyService;
         private readonly ITokenHelper _tokenHelper;
-
-        public AuthManager(IUsersService usersService, ITokenHelper tokenHelper, ICompanyService companyService)
+        private readonly IMailService _mailService;
+        private readonly IMailParametersService _mailParametersService;
+        public AuthManager(IUsersService usersService, ICompanyService companyService, ITokenHelper tokenHelper, IMailService mailService, IMailParametersService mailParametersService)
         {
             _usersService = usersService;
-            _tokenHelper = tokenHelper;
             _companyService = companyService;
+            _tokenHelper = tokenHelper;
+            _mailService = mailService;
+            _mailParametersService = mailParametersService;
         }
 
         public IResult CompanyExist(Companies company)
@@ -93,6 +96,16 @@ namespace Business.Concrete
                 PasswordHash = user.PasswordHash,
                 PasswordSalt = user.PasswordSalt
             };
+            var mailParameters = _mailParametersService.Get(4);
+            SendMailDto sendMailDto = new SendMailDto()
+            {
+                mailParameters = mailParameters.Data,
+                email = user.UserEmail,
+                subject = "Kullanıcı Onay Maili",
+                body = "Sisteme Kayıt oldunuz Tamamlamak için Linke tıkla"
+            };
+            _mailService.SendMail(sendMailDto);
+
             return new SuccessDataResult<UserCompanyDto>(userCompanyDto, Messages.SuccessRegister);
         }
 
