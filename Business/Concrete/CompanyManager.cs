@@ -26,9 +26,25 @@ namespace Business.Concrete
             return new SuccessResult(true,Messages.AddedCompany);
         }
 
+        public IResult ComapnyExist(Companies companies)
+        {
+            var result = _companyDal.Get(c => c.CompanyName == companies.CompanyName && c.TaxDepartment == companies.TaxDepartment && c.TaxIdNumber == companies.TaxIdNumber);
+            if (result!=null)
+            {
+                return new ErrorResult(Messages.CompanyExist);
+            }
+            return new SuccessResult();
+        }
+
         public IDataResult<List<Companies>> GetList()
         {
             return new SuccessDataResult<List<Companies>>(_companyDal.GetList());
+        }
+
+        public IResult UserCompanyAdd(int userId, int companyId)
+        {
+          _companyDal.UserCompanyAdd(userId, companyId);
+            return new SuccessResult();
         }
     }
 }

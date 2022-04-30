@@ -12,5 +12,7 @@ namespace Business.Abstract
     {
         IResult Add(Companies companies);
         IDataResult<List<Companies>> GetList();
+        IResult ComapnyExist(Companies companies);
+        IResult UserCompanyAdd(int userId,int companyId);
     }
 }

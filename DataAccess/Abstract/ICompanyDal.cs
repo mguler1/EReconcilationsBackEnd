@@ -10,6 +10,6 @@ namespace DataAccess.Abstract
 {
     public interface ICompanyDal:IEntityRepository<Companies>
     {
-      
+        void UserCompanyAdd(int userId, int companyId);
     }
 }
