@@ -14,7 +14,7 @@ namespace Business.Abstract
     public interface IAuthService
     {
         IDataResult<UserCompanyDto> Regiter(UserForRegisterDto userForRegisterDto ,string passord, Companies company);
-        IDataResult<User> RegiterSecondAccount(UserForRegisterDto userForRegisterDto ,string passord);
+        IDataResult<User> RegiterSecondAccount(UserForRegisterDto userForRegisterDto ,string passord,int companyId);
         IDataResult<User> Login(UserForLogin userForLoginDto);
         IDataResult<User> GetByMailConfirmValue(string value);
         IDataResult<User> GetById(int Id);
@@ -23,5 +23,6 @@ namespace Business.Abstract
         IResult CompanyExist(Companies company);
         IResult SendConfirmEmail(User user);
         IDataResult<AccessToken> CreateAccessToken(User user,int companyId);
+        IDataResult<UserCompanies> GetCompany(int userId);
     }
 }

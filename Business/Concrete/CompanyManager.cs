@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using Business.Constans;
+using Core.Entities.Concrete;
 using Core.Utilities.Results.Abstarct;
 using Core.Utilities.Results.Concrete;
 using DataAccess.Abstract;
@@ -34,6 +35,11 @@ namespace Business.Concrete
                 return new ErrorResult(Messages.CompanyExist);
             }
             return new SuccessResult();
+        }
+
+        public IDataResult<UserCompanies> GetCompany(int userId)
+        {
+            return new SuccessDataResult<UserCompanies>(_companyDal.GetCompany(userId));
         }
 
         public IDataResult<List<Companies>> GetList()

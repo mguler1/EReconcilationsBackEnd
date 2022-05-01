@@ -38,15 +38,15 @@ namespace Api.Controllers
             return BadRequest(registerResult.Message);
         }
         [HttpPost("registerSecondAccount")]
-        public IActionResult RegisterSecondAccount(UserForRegisterDto userForRegisterDto, int companyId)
+        public IActionResult RegisterSecondAccount(UserForRegisterToSecondAccountDto userForRegisterToSecondAccountDto)
         {
-            var userExist = _authService.UserExist(userForRegisterDto.EMail);
+            var userExist = _authService.UserExist(userForRegisterToSecondAccountDto.EMail);
             if (!userExist.Success)
             {
                 return BadRequest(userExist.Message);
             }
-            var registerResult = _authService.RegiterSecondAccount(userForRegisterDto, userForRegisterDto.Password);
-            var result = _authService.CreateAccessToken(registerResult.Data, companyId);
+            var registerResult = _authService.RegiterSecondAccount(userForRegisterToSecondAccountDto, userForRegisterToSecondAccountDto.Password, userForRegisterToSecondAccountDto.CompanyId);
+            var result = _authService.CreateAccessToken(registerResult.Data, userForRegisterToSecondAccountDto.CompanyId);
            
             return BadRequest(registerResult.Message);
         }
@@ -58,12 +58,21 @@ namespace Api.Controllers
             {
                 return BadRequest(userToLogin.Message);
             }
-            var result = _authService.CreateAccessToken(userToLogin.Data, 0);
-            if (result.Success)
+            if (userToLogin.Data.IsActive)
             {
-                return Ok(result.Data);
+                var userCompany = _authService.GetCompany(userToLogin.Data.UserId).Data;
+                var result = _authService.CreateAccessToken(userToLogin.Data, userCompany.CompanyId);
+                if (result.Success)
+                {
+                    return Ok(result.Data);
+                }
             }
-            return BadRequest(userToLogin.Message);
+            else
+            {
+                return BadRequest(userToLogin.Message);
+            }
+            return BadRequest("Kullanıcı Pasif Durumdadır");
+
         }
 
         [HttpGet("confirmUser")]

@@ -60,6 +60,11 @@ namespace Business.Concrete
             return new SuccessDataResult<User>(_usersService.GetByMailConfirmValue(value));
         }
 
+        public IDataResult<UserCompanies> GetCompany(int userId)
+        {
+            return new SuccessDataResult<UserCompanies>(_companyService.GetCompany(userId).Data);
+        }
+
         public IDataResult<User> Login(UserForLogin userForLoginDto)
         {
             var userToCheck = _usersService.GetByMail(userForLoginDto.Email);
@@ -133,11 +138,13 @@ namespace Business.Concrete
                 //    body = templateBody
                 //};
                 //_mailService.SendMail(sendMailDto);
+                user.MailConfirmDate = DateTime.Now;
+                _usersService.Update(user);
             }
          
         }
 
-        public IDataResult<User> RegiterSecondAccount(UserForRegisterDto userForRegisterDto, string passord)
+        public IDataResult<User> RegiterSecondAccount(UserForRegisterDto userForRegisterDto, string passord,int companyId)
         {
             byte[] passwordHash, passwordSalt;
             HashingHelper.CreatePasswordHash(passord, out passwordHash, out passwordSalt);
@@ -155,15 +162,37 @@ namespace Business.Concrete
 
             };
             _usersService.Add(user);
+            _companyService.UserCompanyAdd(user.UserId, companyId);
+            SendConfirmEmail(user);
             return new SuccessDataResult<User>(user, Messages.SuccessRegister);
         }
 
         public IResult SendConfirmEmail(User user)
         {
+            if (user.MailConfirm==true)
+            {
+                return new ErrorResult(Messages.MailAllReadyConfirm);
+            }
+            DateTime confirmMailDate = user.MailConfirmDate;
+            DateTime now = DateTime.Now;
+            if (confirmMailDate.ToShortDateString()==now.ToShortDateString())
+            {
+                if (confirmMailDate.Hour==now.Hour && confirmMailDate.AddMinutes(5).Minute <= now.Minute)
+                {
+                    SendConfirmEmail(user);
+                    return new SuccessResult();
+                }
+                else
+                {
+                    return new ErrorResult(Messages.MailAllReadyConfirm);
+                }
+              
+            }
             SendConfirmEmail(user);
             return new SuccessResult();
-        }
 
+        }
+      
         public IResult Update(User user)
         {
             _usersService.Update(user);
