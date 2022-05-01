@@ -23,6 +23,7 @@ namespace Business.Concrete
 
         public IResult Add(Companies companies)
         {
+            
             _companyDal.Add(companies);
             return new SuccessResult(true,Messages.AddedCompany);
         }

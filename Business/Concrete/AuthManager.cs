@@ -1,5 +1,7 @@
 ﻿using Business.Abstract;
 using Business.Constans;
+using Business.ValidationRules.FluentValidation;
+using Core.CrossCuttingConcems.Validation;
 using Core.Entities.Concrete;
 using Core.Utilities.Hashing;
 using Core.Utilities.Results.Abstarct;
@@ -7,8 +9,10 @@ using Core.Utilities.Results.Concrete;
 using Core.Utilities.Security.Jwt;
 using Entities.Concrete;
 using Entities.DTOs;
+using FluentValidation;
 using System;
 using System.Collections.Generic;
+
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -81,6 +85,7 @@ namespace Business.Concrete
 
         public IDataResult<UserCompanyDto> Regiter(UserForRegisterDto userForRegisterDto, string passord, Companies company)
         {
+            
             byte[] passwordHash, passwordSalt;
             HashingHelper.CreatePasswordHash(passord, out passwordHash, out passwordSalt);
             var user = new User()
@@ -96,6 +101,9 @@ namespace Business.Concrete
                 UserName = userForRegisterDto.Name
 
             };
+            ValidationTool.Validate(new UserValidator(), user);
+            ValidationTool.Validate(new CompanyValidator(), company);
+
             _usersService.Add(user);
             _companyService.Add(company);
             _companyService.UserCompanyAdd(user.UserId, company.CompanyId);
@@ -146,6 +154,7 @@ namespace Business.Concrete
 
         public IDataResult<User> RegiterSecondAccount(UserForRegisterDto userForRegisterDto, string passord,int companyId)
         {
+           
             byte[] passwordHash, passwordSalt;
             HashingHelper.CreatePasswordHash(passord, out passwordHash, out passwordSalt);
             var user = new User()
