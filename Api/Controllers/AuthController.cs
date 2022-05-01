@@ -65,5 +65,31 @@ namespace Api.Controllers
             }
             return BadRequest(userToLogin.Message);
         }
+
+        [HttpGet("confirmUser")]
+        public IActionResult ConfirmUser(string value)
+        {
+            var user = _authService.GetByMailConfirmValue(value).Data;
+            user.MailConfirm = true;
+            user.MailConfirmDate = DateTime.Now;
+            var result= _authService.Update(user);
+            if (result.Success)
+            {
+                return Ok();
+            }
+            return BadRequest(result.Message);
+        }
+
+        [HttpGet("sendConfirmEmail")]
+        public IActionResult SendConfirmEMail(int userId)
+        {
+            var user = _authService.GetById(userId).Data;
+            var result=_authService.SendConfirmEmail(user);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result.Message);
+        }
     }
 }

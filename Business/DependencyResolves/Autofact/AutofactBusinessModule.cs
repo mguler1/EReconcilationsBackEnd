@@ -39,6 +39,7 @@ namespace Business.DependencyResolves.Autofact
 
             builder.RegisterType<MailParametersManager>().As<IMailParametersService>();
             builder.RegisterType<EfMailParametersDal>().As<IMailParametersDal>();
+
             builder.RegisterType<MailManager>().As<IMailService>();
             builder.RegisterType<EfMailDal>().As<IMailDal>();
 
@@ -56,7 +57,10 @@ namespace Business.DependencyResolves.Autofact
 
             builder.RegisterType<AuthManager>().As<IAuthService>();
             builder.RegisterType<JwtHelper>().As<ITokenHelper>();
-           
+
+            builder.RegisterType<MailTemplateManager>().As<IMailTemplateService>();
+            builder.RegisterType<EfMailTemplateDal>().As<IMailTemplateDal>();
+
         }
     }
 }
