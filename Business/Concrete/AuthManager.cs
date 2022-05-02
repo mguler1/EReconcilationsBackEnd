@@ -3,6 +3,7 @@ using Business.Constans;
 using Business.ValidationRules.FluentValidation;
 using Core.CrossCuttingConcems.Validation;
 using Core.Entities.Concrete;
+using Core.Extensions.Aspects.Autofact.Transation;
 using Core.Utilities.Hashing;
 using Core.Utilities.Results.Abstarct;
 using Core.Utilities.Results.Concrete;
@@ -82,7 +83,7 @@ namespace Business.Concrete
             }
             return new SuccessDataResult<User>(userToCheck, Messages.SuccessFulLogin);
         }
-
+        [TransactionScopeAspect]
         public IDataResult<UserCompanyDto> Regiter(UserForRegisterDto userForRegisterDto, string passord, Companies company)
         {
             
