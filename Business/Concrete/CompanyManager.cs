@@ -1,6 +1,8 @@
 ﻿using Business.Abstract;
 using Business.Constans;
+using Business.ValidationRules.FluentValidation;
 using Core.Entities.Concrete;
+using Core.Extensions.Aspects.Autofact.Validation;
 using Core.Utilities.Results.Abstarct;
 using Core.Utilities.Results.Concrete;
 using DataAccess.Abstract;
@@ -20,7 +22,7 @@ namespace Business.Concrete
         {
             _companyDal = companyDal;
         }
-
+        [ValidationAspect(typeof(CompanyValidator))]
         public IResult Add(Companies companies)
         {
             

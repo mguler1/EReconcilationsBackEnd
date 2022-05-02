@@ -1,6 +1,7 @@
 ﻿using Business.Abstract;
 using Business.ValidationRules.FluentValidation;
 using Core.Entities.Concrete;
+using Core.Extensions.Aspects.Autofact.Validation;
 using DataAccess.Abstract;
 using FluentValidation;
 using System;
@@ -19,7 +20,7 @@ namespace Business.Concrete
         {
             _userDal = userDal;
         }
-
+        [ValidationAspect(typeof(UserValidator))]
         public void Add(User user)
         {
             UserValidator userValid = new UserValidator();

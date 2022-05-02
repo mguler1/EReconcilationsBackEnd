@@ -101,8 +101,9 @@ namespace Business.Concrete
                 UserName = userForRegisterDto.Name
 
             };
-            ValidationTool.Validate(new UserValidator(), user);
-            ValidationTool.Validate(new CompanyValidator(), company);
+            //ValidationTool.Validate(new UserValidator(), user);
+            //ValidationTool.Validate(new CompanyValidator(), company);
+
 
             _usersService.Add(user);
             _companyService.Add(company);
