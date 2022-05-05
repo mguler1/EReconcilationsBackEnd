@@ -25,7 +25,7 @@ namespace Core.Utilities.Security.Jwt
         }
         public AccessToken CreateToken(User user, List<OperationClaims> operationClaims, int companyId)
         {
-            _accessTokenExpiration = DateTime.Now.AddMinutes(_tokenOptions.AccessTokenExpression);
+            _accessTokenExpiration = DateTime.Now.AddHours(_tokenOptions.AccessTokenExpression);
             var securityKey = SecurityKeyHelper.CreateSecurityKey(_tokenOptions.SecurityKey);
             var signinCredentials = SigningCredentialsHelper.CreateSignInCredentials(securityKey);
             var jwt = CreateJwtSecurityToken(_tokenOptions, user, signinCredentials, operationClaims, companyId);
@@ -44,7 +44,7 @@ namespace Core.Utilities.Security.Jwt
                 issuer: tokenOptions.Issuer,
                 audience: tokenOptions.Audience,
                 expires: _accessTokenExpiration,
-                notBefore: DateTime.Now,
+               // notBefore: DateTime.Now,
                 claims: SetClaims(user, operationClaims, companyId),
                 signingCredentials: signInCrediantials);
             return jwt;

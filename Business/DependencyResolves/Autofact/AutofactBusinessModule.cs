@@ -64,11 +64,11 @@ namespace Business.DependencyResolves.Autofact
             builder.RegisterType<MailTemplateManager>().As<IMailTemplateService>();
             builder.RegisterType<EfMailTemplateDal>().As<IMailTemplateDal>();
 
-            var assembly = System.Reflection.Assembly.GetExecutingAssembly();
-            builder.RegisterAssemblyTypes(assembly).AsImplementedInterfaces().EnableInterfaceInterceptors(new ProxyGenerationOptions()
-            {
-                Selector = new AspectInterceptorSelector()
-            }).SingleInstance();
+            //var assembly = System.Reflection.Assembly.GetExecutingAssembly();
+            //builder.RegisterAssemblyTypes(assembly).AsImplementedInterfaces().EnableInterfaceInterceptors(new ProxyGenerationOptions()
+            //{
+            //    Selector = new AspectInterceptorSelector()
+            //}).SingleInstance();
         }
     }
 }
