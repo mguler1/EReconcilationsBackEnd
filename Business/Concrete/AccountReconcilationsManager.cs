@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Core.Extensions.Aspects.Caching;
 using Core.Utilities.Results.Abstarct;
 using Core.Utilities.Results.Concrete;
 using DataAccess.Abstract;
@@ -19,13 +20,13 @@ namespace Business.Concrete
         {
             _accountReconcilationDal = accountReconcilationDal;
         }
-
+        [CacheRemoveAspect("IAccountReconcilationsService.Get")]
         public IResult Add(AccountReconcilations accountReconcilations)
         {
             _accountReconcilationDal.Add(accountReconcilations);
             return new SuccessResult();
         }
-
+        [CacheRemoveAspect("IAccountReconcilationsService.Get")]
         public IResult Delete(AccountReconcilations accountReconcilations)
         {
 
@@ -37,12 +38,12 @@ namespace Business.Concrete
         {
             return new SuccessDataResult<AccountReconcilations>(_accountReconcilationDal.Get(x => x.AccountReconcilationsId == id));
         }
-
+        [CacheAspect(60)]
         public IDataResult<List<AccountReconcilations>> GetList(int companyId)
         {
             return new SuccessDataResult<List<AccountReconcilations>>(_accountReconcilationDal.GetList(x=>x.CompanyId==companyId));
         }
-
+        [CacheRemoveAspect("IAccountReconcilationsService.Get")]
         public IResult Update(AccountReconcilations accountReconcilations)
         {
 
